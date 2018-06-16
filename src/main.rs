@@ -38,7 +38,7 @@ fn main() {
     let elapsed = start.elapsed();
 
     println!(
-        "{:.3}",
+        "{:.6}",
         elapsed.as_secs() as f64 + elapsed.subsec_nanos() as f64 / 1e9
     );
 }
