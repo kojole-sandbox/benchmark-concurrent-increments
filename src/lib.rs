@@ -1,5 +1,8 @@
 mod atomic;
+mod channel;
+mod channel_lock;
 mod mutex;
+mod ptr;
 mod rwlock;
 
 #[derive(Debug)]
@@ -7,6 +10,8 @@ pub enum Kind {
     Atomic,
     Mutex,
     RwLock,
+    Channel,
+    ChannelLock,
 }
 
 impl Kind {
@@ -15,7 +20,9 @@ impl Kind {
             "atomic" => Ok(Kind::Atomic),
             "mutex" => Ok(Kind::Mutex),
             "rwlock" => Ok(Kind::RwLock),
-            _ => Err("must be one of Atomic, Mutex, RwLock"),
+            "channel" => Ok(Kind::Channel),
+            "channellock" => Ok(Kind::ChannelLock),
+            _ => Err("must be one of Atomic, Mutex, RwLock, Channel, ChannelLock"),
         }
     }
 }
@@ -43,5 +50,7 @@ pub fn run(config: Config) {
         Kind::Atomic => atomic::run(config.n_threads, count),
         Kind::Mutex => mutex::run(config.n_threads, count),
         Kind::RwLock => rwlock::run(config.n_threads, count),
+        Kind::Channel => channel::run(config.n_threads, count),
+        Kind::ChannelLock => channel_lock::run(config.n_threads, count),
     }
 }

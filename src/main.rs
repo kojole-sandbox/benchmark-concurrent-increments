@@ -17,9 +17,11 @@ Usage:
 
 Arguments:
   kind       Thread-safe implementation:
-               Atomic  Use AtomicUsize.
-               Mutex   Use Mutex.
-               RwLock  Use RwLock.
+               Atomic       Use AtomicUsize.
+               Mutex        Use Mutex.
+               RwLock       Use RwLock.
+               Channel      Send increments by mpsc channel.
+               ChannelLock  Use channel based Lock.
   n_threads  # of threads.
   n_incs     # of total increments across threads.
 
