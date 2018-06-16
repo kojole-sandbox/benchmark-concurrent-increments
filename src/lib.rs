@@ -1,4 +1,8 @@
+extern crate crossbeam_channel;
+
 mod atomic;
+mod cchannel;
+mod cchannel_lock;
 mod channel;
 mod channel_lock;
 mod mutex;
@@ -12,6 +16,8 @@ pub enum Kind {
     RwLock,
     Channel,
     ChannelLock,
+    CChannel,
+    CChannelLock,
 }
 
 impl Kind {
@@ -22,7 +28,9 @@ impl Kind {
             "rwlock" => Ok(Kind::RwLock),
             "channel" => Ok(Kind::Channel),
             "channellock" => Ok(Kind::ChannelLock),
-            _ => Err("must be one of Atomic, Mutex, RwLock, Channel, ChannelLock"),
+            "cchannel" => Ok(Kind::CChannel),
+            "cchannellock" => Ok(Kind::CChannelLock),
+            _ => Err("must be one of Atomic, Mutex, RwLock, Channel, ChannelLock, CChannel, CChannelLock"),
         }
     }
 }
@@ -52,5 +60,7 @@ pub fn run(config: Config) {
         Kind::RwLock => rwlock::run(config.n_threads, count),
         Kind::Channel => channel::run(config.n_threads, count),
         Kind::ChannelLock => channel_lock::run(config.n_threads, count),
+        Kind::CChannel => cchannel::run(config.n_threads, count),
+        Kind::CChannelLock => cchannel_lock::run(config.n_threads, count),
     }
 }
