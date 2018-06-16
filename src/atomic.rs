@@ -2,7 +2,7 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Arc;
 use std::thread;
 
-pub fn run(n_threads: usize, count: usize) {
+pub fn run(n_threads: usize, count: usize) -> usize {
     let value = Arc::new(AtomicUsize::new(0));
     let mut threads = Vec::with_capacity(n_threads);
 
@@ -20,7 +20,7 @@ pub fn run(n_threads: usize, count: usize) {
         t.join().unwrap();
     }
 
-    assert_eq!(value.load(Ordering::Relaxed), n_threads * count);
+    value.load(Ordering::Relaxed)
 }
 
 #[cfg(test)]
@@ -29,11 +29,11 @@ mod tests {
 
     #[test]
     fn run_single() {
-        run(1, 1_000);
+        assert_eq!(run(1, 1_000), 1_000);
     }
 
     #[test]
     fn run_concurrent() {
-        run(4, 250);
+        assert_eq!(run(4, 250), 1_000);
     }
 }

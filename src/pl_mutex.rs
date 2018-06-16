@@ -3,7 +3,7 @@ use std::thread;
 
 use parking_lot::Mutex;
 
-pub fn run(n_threads: usize, count: usize) {
+pub fn run(n_threads: usize, count: usize) -> usize {
     let value = Arc::new(Mutex::new(0usize));
     let mut threads = Vec::with_capacity(n_threads);
 
@@ -21,7 +21,8 @@ pub fn run(n_threads: usize, count: usize) {
         t.join().unwrap();
     }
 
-    assert_eq!(*value.lock(), n_threads * count);
+    let v = *value.lock();
+    v
 }
 
 #[cfg(test)]
@@ -30,11 +31,11 @@ mod tests {
 
     #[test]
     fn run_single() {
-        run(1, 1_000);
+        assert_eq!(run(1, 1_000), 1_000);
     }
 
     #[test]
     fn run_concurrent() {
-        run(4, 250);
+        assert_eq!(run(4, 250), 1_000);
     }
 }

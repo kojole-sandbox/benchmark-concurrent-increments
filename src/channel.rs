@@ -1,7 +1,7 @@
 use std::sync::mpsc::channel;
 use std::thread;
 
-pub fn run(n_threads: usize, count: usize) {
+pub fn run(n_threads: usize, count: usize) -> usize {
     let (tx, rx) = channel();
     let mut threads = Vec::with_capacity(n_threads);
 
@@ -25,7 +25,7 @@ pub fn run(n_threads: usize, count: usize) {
         t.join().unwrap();
     }
 
-    assert_eq!(value, n_threads * count);
+    value
 }
 
 #[cfg(test)]
@@ -34,11 +34,11 @@ mod tests {
 
     #[test]
     fn run_single() {
-        run(1, 1_000);
+        assert_eq!(run(1, 1_000), 1_000);
     }
 
     #[test]
     fn run_concurrent() {
-        run(4, 250);
+        assert_eq!(run(4, 250), 1_000);
     }
 }

@@ -59,7 +59,7 @@ impl Config {
     }
 }
 
-pub fn run(config: Config) {
+pub fn run(config: Config) -> usize {
     let count = config.n_incs / config.n_threads;
     match config.kind {
         Kind::Atomic => atomic::run(config.n_threads, count),
