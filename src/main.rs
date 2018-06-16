@@ -17,7 +17,9 @@ Usage:
 
 Arguments:
   kind       Thread-safe implementation:
-               atomic  Use atomic type.
+               Atomic  Use AtomicUsize.
+               Mutex   Use Mutex.
+               RwLock  Use RwLock.
   n_threads  # of threads.
   n_incs     # of total increments across threads.
 
