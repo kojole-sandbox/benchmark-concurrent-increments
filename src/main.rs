@@ -20,6 +20,8 @@ Arguments:
                Atomic        Use AtomicUsize.
                Mutex         Use Mutex.
                RwLock        Use RwLock.
+               PlMutex       parking_lot version of Mutex.
+               PlRwLock      parking_lot version of RwLock.
                Channel       Send increments by mpsc channel.
                ChannelLock   Use channel-based Lock.
                CChannel      crossbeam-channel version of Channel.
