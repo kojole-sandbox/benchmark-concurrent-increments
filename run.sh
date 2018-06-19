@@ -2,7 +2,7 @@
 set -eux
 
 OUT_DIR="$(dirname $0)/out"
-N_INCS=72072000
+N_INCS=7207200
 
 rm -f $OUT_DIR/*.txt
 
